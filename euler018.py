@@ -46,6 +46,7 @@ class color:
    END = '\033[0m'
 
 max_path_sum = 0
+"""
 selected_element_index = 0
 output = ""
 for v_pos, this_row in enumerate(pyramid):
@@ -66,5 +67,14 @@ for v_pos, this_row in enumerate(pyramid):
     output = ""
     max_path_sum += this_row[selected_element_index]
   
+"""
+for i in range(len(pyramid)-1, 0, -1):
+	l2 = pyramid[i]
+	l1 = pyramid[i-1]
+	for j in range(0, len(l1)):
+		l1[j] += max(l2[j], l2[j+1])
+	pyramid[i-1] = l1
+
+max_path_sum = pyramid[0][0]
 
 print("max_path_sum: {}, height: {}".format(max_path_sum, len(pyramid)))
