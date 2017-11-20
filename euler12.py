@@ -1,27 +1,37 @@
 #!/usr/bin/python
+
 import math
+import time
 
 def triangle(n):
-    r = 0
-    for i in range(1, n+1):
-        r += i
-    return r
+	t = 0
+	for i in range(n+1):
+		t += i
+	return t
 
-def factors(n):
-    # everything is divisible by 1 and itself, so start from 2 factors
-    f = 2
-    divisor = 2
-    while divisor < n:
-        if not n % divisor:
-            f += 1
-        divisor += 1
-    return f
+def fractions(n):
+	if n != 1:
+		f = [1, n]
+	else:
+		return [1]
+	ff = 2
+	i = n // ff
+	smallest_known_divisor = 1
+	while smallest_known_divisor < i:
+		if n % i == 0:
+			f.append(i)
+			f.append(ff)
+			smallest_known_divisor = ff
+		ff += 1
+		i = n // ff
+	return set(f)
 
-greatest_number_of_factors = 0
+g = 0
+start_time = time.time();
 
-for i in range(1,111111):
-    tr = triangle(i);
-    fr = factors(tr);
-    if greatest_number_of_factors < fr:
-        print("{}: {}".format(tr, fr))
-        greatest_number_of_factors = fr
+for i in range(1, 111111):
+	tr = triangle(i)
+	fr = fractions(tr)
+	if g < len(fr):
+		print("{}->{} ({}) {}".format(i, tr, len(fr), int(time.time() - start_time)))
+		g = len(fr)

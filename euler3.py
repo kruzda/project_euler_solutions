@@ -1,46 +1,41 @@
 #!/usr/bin/python
+import math
+import argparse
 
 '''
-https://projecteuler.net/problem=3
-
 The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 600851475143 ?
 '''
 
-import time
-import math
+parser = argparse.ArgumentParser(prog='euler3.py')
+parser.add_argument("n", type=int, help='the number to factor')
+args = parser.parse_args()
+n = args.n
 
-start_time=time.time()
+if n % 2 == 0:
+	lastfactor = 2
+	n /= 2
+	while n % 2 == 0:
+		n /= 2
+else:
+	lastfactor = 1
 
-def isprime(n, i):
-    m = math.sqrt(n)
-    if m.is_integer() or not n % 2:
-        return False
-    while i<m:
-        if not n % i:
-            return False
-        i+=1
-    return True
+factor = 3
+maxfactor=math.sqrt(n)
 
-d=2
-j=13195
-j=600851475143
-# j=317584931803
+while 1 < n and factor <= maxfactor:
+	if n % factor == 0:
+		print("{} is a prime factor of {}. it fits {} times".format(factor, n, n / factor))
+		n /= factor
+		lastfactor = factor
+		while not n % factor:
+			n /= factor
+			print("{} fits {} times to it".format(factor, n))
+		maxfactor = math.sqrt(n)
+	factor += 2
 
-while 1 < j:
-    if not j % d:
-        j = j / d
-        d = d - 1;
-    d = d + 1
-
-print(d)
-
-# while d!=j:
-    # if not d % 1000000:
-        # loops_per_second = int(d/(time.time() - start_time))
-        # eta = (j - d) // loops_per_second
-        # print("{} {}/s ETA: {}".format(d, loops_per_second, eta))
-    # if isprime(d, 2) and not j % d:
-        # print("p: {}".format(d))
-    # d+=1
+if n == 1:
+	print(lastfactor)
+else:
+	print(n)
