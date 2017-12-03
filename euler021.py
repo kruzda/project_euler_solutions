@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import math # quick maths
 
 """
 Project Euler problem #021
@@ -11,19 +12,28 @@ For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 a
 Evaluate the sum of all the amicable numbers under 10000.
 """
 
+# optimisation ideas from the thread
+def d(n):
+	result = 1
+	square = math.sqrt(n)
+	for d in range(2, int(math.sqrt(n))):
+		div = n % d
+		if div == 0:
+			result += d
+			result += int(n / d)
+	return(result)
+
 def divisors(n):
 	result = []
 	for d in range(1, n//2+1):
 		if not n % d:
 			result.append(d)
-	return(result)
+	return(sum(result))
 
 amicable = []
 for i in range(10001):
-	di_a = divisors(i)
-	sd_a = sum(di_a)
-	di_b = divisors(sd_a)
-	sd_b = sum(di_b)
+	sd_a = d(i)
+	sd_b = d(sd_a)
 	if i == sd_b and sd_a != sd_b and [sd_b, sd_a] not in amicable:
 		amicable.append([sd_a, sd_b])
 
