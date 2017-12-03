@@ -30,11 +30,10 @@ def divisors(n):
 			result.append(d)
 	return(sum(result))
 
-amicable = []
-for i in range(10001):
-	sd_a = d(i)
-	sd_b = d(sd_a)
-	if i == sd_b and sd_a != sd_b and [sd_b, sd_a] not in amicable:
-		amicable.append([sd_a, sd_b])
+sum = 0
+for a in range(1, 10000):
+	b = d(a)
+	if a != b and a == d(b):
+		sum += a
 
-print(sum(map(sum, (x for x in amicable))))
+print(sum)
