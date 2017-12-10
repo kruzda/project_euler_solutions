@@ -15,7 +15,6 @@ Evaluate the sum of all the amicable numbers under 10000.
 # optimisation ideas from the thread
 def d(n):
 	result = 1
-	square = math.sqrt(n)
 	for d in range(2, int(math.sqrt(n))):
 		div = n % d
 		if div == 0:
