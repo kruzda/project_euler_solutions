@@ -28,7 +28,7 @@ def divisors(n):
 	for d in range(1, n//2+1):
 		if not n % d:
 			result.append(d)
-	return(sum(result))
+	return(result)
 
 sum = 0
 for a in range(1, 10000):
