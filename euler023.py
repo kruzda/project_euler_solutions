@@ -10,21 +10,54 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 """
 
+# the commented out fields are my firs solution. using that took 36 minutes to get the result. the few lines that replace it (a solution posted in the forum) take around 9 seconds.
+
+#from bisect import bisect
 import math
-from euler021 import d
 
+
+"""
 abundant_numbers = []
-for a in range(12, 28111):
-    if a < d(a):
-        abundant_numbers.append(a)
+def init():
+	for a in range(12, 28125):
+		if a < dd(a):
+			abundant_numbers.append(a)
+"""
 
-result = sum(range(1, 23))
-for i in range(17, 28123):
-    n = i
-    for a in abundant_numbers[:i]:
-        n -= a
-        if not n in abundant_numbers:
-            result.append(i)
-                
-    
-     
+def dd(n):
+	result = [1]
+	for d in range(2, int(math.sqrt(n))+1):
+		div = n % d
+		if div == 0:
+			result += [a for a in [int(n/d)] if not a in result]
+			result += [a for a in [d] if not a in result]
+	return(sum(result))
+
+"""
+def suitable(n):
+	for ab in abundant_numbers[bisect(abundant_numbers, n-12)-1::-1]:
+		if n - ab in abundant_numbers:
+			print("unsuitable: {}. ( {} - {} = {} (which is an abundant number))".format(n, n, ab, n-ab))
+			return False
+	print("suitable: {}.".format(n))
+	return True
+"""
+
+def abundantsum(i):
+	return(any(i-a in abundant_numbers for a in abundant_numbers))
+
+def main():
+	return(sum(i for i in range(1,28124) if not abundantsum(i)))
+"""
+	results = []
+	for x in range(28123, 0, -1):
+		if (12 < x and not x % 2) or suitable(x):
+			results.append(x)
+	return(sum(results))
+"""
+
+if __name__ == "__main__":
+	#init()
+	abundant_numbers = set(i for i in range(1,28124) if i < dd(i))
+	print("working with {} abundant numbers".format(len(abundant_numbers)))
+	print("result: {}".format(main()))
