@@ -15,7 +15,7 @@ Evaluate the sum of all the amicable numbers under 10000.
 # optimisation ideas from the thread
 def d(n):
 	result = 1
-	for d in range(2, int(math.sqrt(n))):
+	for d in range(2, int(math.sqrt(n))+1):
 		div = n % d
 		if div == 0:
 			result += d
@@ -29,10 +29,14 @@ def divisors(n):
 			result.append(d)
 	return(result)
 
-sum = 0
-for a in range(1, 10000):
-	b = d(a)
-	if a != b and a == d(b):
-		sum += a
+def main():
+	sum = 0
+	for a in range(1, 10000):
+		b = d(a)
+		if a != b and a == d(b):
+			sum += a
 
-print(sum)
+	print(sum)
+
+if __name__ == "__main__":
+	main()
